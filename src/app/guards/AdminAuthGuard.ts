@@ -12,7 +12,7 @@ export class AdminAuthGuard implements CanActivate {
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.auth.currentUserValue;
-        if (!currentUser) {
+        if (!currentUser || this.auth.isTokenExpired(currentUser.token)) {
             this.router.navigate(['/account/login'], {
                 queryParams: {
                     returnUrl: this.auth.replaceAll(state.url, "%2F", "/")

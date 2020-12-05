@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { environment } from '../../environments/environment';
 import { Router } from '@angular/router';
+import jwt_decode, { JwtPayload } from 'jwt-decode'
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
@@ -56,10 +57,30 @@ export class AuthenticationService {
         }
     }
     getUserFromLocalStorage() {
-        return JSON.parse(localStorage.getItem('currentUser')) || null;
+        const userDetails = JSON.parse(localStorage.getItem('currentUser'))
+        if (!userDetails || this.isTokenExpired(userDetails?.token))
+            return null;
+        return userDetails;
     }
 
     public replaceAll(input: string, find: string, replace: string): string {
         return input.replace(new RegExp(find, 'g'), replace);
+    }
+
+    isTokenExpired(token?: string): boolean {
+        if (!token) token = this.getToken();
+        if (!token) return true;
+
+        const date = this.getTokenExpirationDate(token);
+        if (date === undefined) return false;
+        return !(date.valueOf() > new Date().valueOf());
+    }
+    getTokenExpirationDate(token: string): Date {
+        const decoded = jwt_decode<JwtPayload>(token);
+        if (decoded.iat === undefined) return null;
+        const date = new Date(0);
+        const expiresAt = 3600;
+        date.setUTCSeconds(decoded.iat + expiresAt);
+        return date;
     }
 }
