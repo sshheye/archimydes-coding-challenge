@@ -35,11 +35,11 @@ export class SignInComponent implements OnInit, OnDestroy {
     // }
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.email, Validators.required])],
-      password: ['', Validators.compose([Validators.required])]
+      password: ['', Validators.compose([Validators.required])],
+      isAdmin: [false]
     });
-
     // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.paramMap.get('returnUrl') || '/dashboard';
+    this.returnUrl = this.route.snapshot.paramMap.get('returnUrl') || '/home';
   }
 
   // convenience getter for easy access to form fields
@@ -58,7 +58,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       return;
     }
     this.loading = true;
-    this.authenticationService.login(this.f.email.value, this.f.password.value)
+    this.authenticationService.login(this.f.email.value, this.f.password.value, this.f.isAdmin.value)
       .pipe(first(),
         takeUntil(this.unsubscribe$))
       .subscribe(() => { this.router.navigate([this.returnUrl]); },
