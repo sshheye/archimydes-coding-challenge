@@ -1,16 +1,30 @@
 .green {
-  background-color: green;
+  background-color: #49cc90;
   color: #fff;
 }
 .red {
-  background-color: #ff0000;
+  background-color: #c92a42;
   color: #fff;
 }
 .black {
-  background-color: #000000;
+  background-color: #24292e;
   color: #fff;
 }
 
+.clickable {
+  cursor: pointer;
+}
+.table th,
+.table td {
+  border-top: none;
+  border-bottom: 1px solid #c8ced3;
+}
+tr:hover {
+  opacity: 0.8;
+}
+.table-item-description {
+  width: 25%;
+}
 .clickable {
   cursor: pointer;
 }

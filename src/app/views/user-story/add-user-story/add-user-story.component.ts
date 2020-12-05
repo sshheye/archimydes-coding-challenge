@@ -26,7 +26,7 @@ export class AddUserStoryComponent implements OnInit {
   storyId: number;
   story: Story;
   storyTypes = [
-    { label: 'Select Story Types', value: '', },
+    { label: 'Select Story Type', value: '', },
     { label: 'Enhancement', value: 'enhancement' },
     { label: 'Bugfix', value: 'bugfix' },
     { label: 'Development', value: 'development' },

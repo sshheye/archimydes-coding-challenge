@@ -20,7 +20,7 @@ export class ListUserStoryComponent implements OnInit {
   storyByColorMapping = { rejected: 'red', accepted: 'green' };
   sortString: string = 'type';
   filterByTypeString: string = 'Enhancement';
-  storyTypes = ['Enhancement', 'Bugfix', 'Development', 'QA', 'None'];
+  storyTypes = ['Enhancement', 'Bugfix', 'Development', 'QA', 'All'];
   ngOnDestroy() {
     this.$unsubscribe.next();
     this.$unsubscribe.complete();
@@ -33,12 +33,13 @@ export class ListUserStoryComponent implements OnInit {
 
   sortStories() {
     const sortType = this.sortString;
+    console.log(sortType)
     switch (sortType) {
       case 'type':
-        this.sortStoriesByCost();
+        this.sortStoriesByType();
         break;
       case 'cost':
-        this.sortStoriesByType();
+        this.sortStoriesByCost();
       case 'complexity':
         this.sortStoriesByComplexity();
       case 'estimatedHrs':
@@ -49,7 +50,7 @@ export class ListUserStoryComponent implements OnInit {
   }
   filterStoriesByType() {
     const storyType = this.filterByTypeString;
-    if (storyType === 'None') {
+    if (storyType === 'All') {
       this.filteredStories = this.stories;
       return;
     }

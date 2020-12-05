@@ -8,14 +8,9 @@ import { Roles } from 'src/app/models/roles';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent implements OnInit {
-  canEditStatus: boolean;
-  constructor(private authService: AuthenticationService,) { }
+  constructor() { }
 
   ngOnInit() {
-    this.canEditStatus = this.authService.currentUserValue.role === Roles.ADMIN;
-  }
-  logout() {
-    this.authService.logout();
   }
 }
 

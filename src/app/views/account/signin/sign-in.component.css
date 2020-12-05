@@ -1,6 +1,29 @@
 .sign-in-toggle {
   padding: 5px 10px 0px 10px;
+  background-color: #edf2f3;
+  color: #104973;
 }
+
 .container {
   height: 80vh;
+}
+.signin-action-section {
+  background-color: #fff;
+  min-height: 80px;
+  margin: 0;
+}
+.btn-primary {
+  background-color: #268fdd;
+  color: #ffffff;
+  border-style: none;
+  outline: none !important;
+}
+
+.content {
+  background-color: #ffffff;
+  color: #104973;
+  padding: 32px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 1px -1px rgba(0, 0, 0, 0.12),
+    0 1px 1px 0 rgba(0, 0, 0, 0.14);
 }

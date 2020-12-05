@@ -11,13 +11,15 @@ import { ToggleButtonComponent } from './views/toggle-button/toggle-button.compo
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { LayoutComponent } from './views/layout/layout.component';
+import { HeaderComponent } from './views/header/header.component';
 import { TokenInterceptor } from './interceptors/token-interceptor'
 @NgModule({
   declarations: [
     AppComponent,
     SignInComponent,
     ToggleButtonComponent,
-    LayoutComponent
+    LayoutComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,

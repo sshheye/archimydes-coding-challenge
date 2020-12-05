@@ -1,0 +1,38 @@
+<div class="row header">
+  <div class="col-md-2 col-sm-12">
+    <a
+      [routerLink]="['/home']"
+      routerLinkActive="router-link-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <h5 class="logo">Stories App</h5></a
+    >
+  </div>
+  <div class="col-md-1 col-sm-12">
+    <a
+      [routerLink]="['/user/user-stories']"
+      routerLinkActive="router-link-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Stories</a
+    >
+  </div>
+  <div class="col-md-2 col-sm-12">
+    <a
+      *ngIf="!canEditStatus"
+      [routerLink]="['/user/user-stories/add']"
+      routerLinkActive="router-link-active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Add Story</a
+    >
+  </div>
+  <div class="col-md-1 col-sm-12 offset-md-6">
+    <a
+      routerLinkActive="router-link-active"
+      (click)="logout()"
+      routerLink="#"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      Logout
+    </a>
+  </div>
+</div>

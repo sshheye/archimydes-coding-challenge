@@ -9,3 +9,22 @@
   border-top-right-radius: initial;
   border-bottom-right-radius: initial;
 }
+
+body {
+  background-color: #edf2f3;
+  font-family: "Lato";
+  color: #104973;
+}
+.invalid-feedback {
+  color: #c92a42;
+}
+
+.btn-primary {
+  background-color: #268fdd;
+  color: #ffffff;
+  border-style: none;
+  outline: none !important;
+}
+.btn-round {
+  border-radius: 18px;
+}
