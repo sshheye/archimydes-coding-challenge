@@ -1,3 +1,5 @@
-<button type="button" class="{{ classNames }}" (click)="toggleButtonValue()">
-  {{ label }}
-</button>
+<label class="switch" class="{{ classNames }}">
+  <input type="checkbox" (change)="toggleCheckboxValue()" />
+  <span class="slider round"></span>
+</label>
+

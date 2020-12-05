@@ -45,7 +45,7 @@ export class ToggleButtonComponent implements OnInit, ControlValueAccessor {
       this.onTouch(value);
     }
   }
-  toggleButtonValue() {
+  toggleCheckboxValue() {
     this.value = !this.value;
     this.onInput(this.value);
     this.onTouched(this.value);
