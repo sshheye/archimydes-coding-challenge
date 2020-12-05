@@ -1,0 +1,13 @@
+.main {
+  height: 100vh;
+}
+
+.offset-2 {
+  margin-left: 13.666667%;
+}
+.app-body {
+  margin-top: 0;
+}
+.card-group > .card {
+  margin-bottom: 0px;
+}
