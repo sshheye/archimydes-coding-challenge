@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
           this.router.navigate(['/admin/user-stories']);
         }
         else if (role === Roles.USER) {
-          this.router.navigate(['/user/user-stories']);
+          this.router.navigate(['/user/user-stories/add']);
         }
         else {
           this.router.navigate(['/account/login']);

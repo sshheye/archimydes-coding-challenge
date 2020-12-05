@@ -1,3 +1,168 @@
-<p>
-  add-user-story works!
-</p>
+<div class="col-md-6">
+  <form [formGroup]="storyForm" (ngSubmit)="onStoryModified()">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="summary">Summary</label>
+          <input
+            type="text"
+            formControlName="summary"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && f.summary.errors
+            }"
+          />
+          <div *ngIf="submitted && f.summary.errors" class="invalid-feedback">
+            <div *ngIf="f.summary.errors.required">*required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea
+            type="text"
+            formControlName="description"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && f.description.errors
+            }"
+          ></textarea>
+          <div
+            *ngIf="submitted && f.description.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.description.errors.required">*required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="type">Type</label>
+          <select
+            formControlName="type"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && f.type.errors
+            }"
+          >
+            <option
+              value="{{ storyType.value }}"
+              *ngFor="let storyType of storyTypes"
+            >
+              {{ storyType.label }}
+            </option>
+          </select>
+          <div *ngIf="submitted && f.type.errors" class="invalid-feedback">
+            <div *ngIf="f.type.errors.required">*required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="complexity">Complexity</label>
+          <select
+            formControlName="complexity"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && f.complexity.errors
+            }"
+          >
+            <option
+              value="{{ complexityType.value }}"
+              *ngFor="let complexityType of complexityTypes"
+            >
+              {{ complexityType.label }}
+            </option>
+          </select>
+          <div
+            *ngIf="submitted && f.complexity.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.complexity.errors.required">*required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="estimatedCompletionTime">Estimated Completion Time</label>
+          <input
+            type="number"
+            formControlName="estimatedCompletionTime"
+            class="form-control"
+            [ngClass]="{
+              'is-invalid': submitted && f.estimatedCompletionTime.errors
+            }"
+          />
+          <div
+            *ngIf="submitted && f.estimatedCompletionTime.errors"
+            class="invalid-feedback"
+          >
+            <div *ngIf="f.estimatedCompletionTime.errors.required">
+              *required
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="cost">Cost</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">$</span>
+            </div>
+            <input
+              type="number"
+              formControlName="cost"
+              class="form-control"
+              [ngClass]="{
+                'is-invalid': submitted && f.cost.errors
+              }"
+            />
+          </div>
+          <div *ngIf="submitted && f.cost.errors" class="invalid-feedback">
+            <div *ngIf="f.cost.errors.required">*required</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button *ngIf="!isEdit" class="btn btn-primary" type="submit">
+      Submit
+    </button>
+  </form>
+</div>
+<div *ngIf="canEditStatus">
+  <button
+    type="button"
+    style="width: 65px"
+    class="btn btn-success"
+    (click)="setStatus(true)"
+  >
+    Accept
+  </button>
+  <button
+    type="button"
+    style="width: 65px"
+    class="btn btn-danger"
+    (click)="setStatus(false)"
+  >
+    Reject
+  </button>
+  <img
+    *ngIf="loading"
+    class="pl-3"
+    src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA=="
+  />
+</div>

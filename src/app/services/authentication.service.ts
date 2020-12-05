@@ -14,7 +14,11 @@ export class AuthenticationService {
     constructor(private http: HttpClient, private router: Router) {
         this.currentUserSubject = new BehaviorSubject<User>(this.getUserFromLocalStorage());
         this.currentUser = this.currentUserSubject.asObservable();
-        this.token = this.getUserFromLocalStorage()?.token;
+        this.token = this.getToken();
+    }
+
+    public getToken() {
+        return this.getUserFromLocalStorage()?.token;
     }
 
     public get currentUserValue(): User {

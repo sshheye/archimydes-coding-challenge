@@ -1,4 +1,30 @@
-<button type="button" class="btn btn-secondary" (click)="logout()">
-  Logout
-</button>
-<router-outlet></router-outlet>
+<div class="row">
+  <button
+    type="button"
+    class="col-md-1 float-right btn btn-secondary"
+    (click)="logout()"
+  >
+    Logout
+  </button>
+</div>
+<div class="row">
+  <div class="col-md-2">
+    <div>
+      <a
+        [routerLink]="['/user/user-stories']"
+        routerLinkActive="router-link-active"
+        >Stories</a
+      >
+    </div>
+    <div *ngIf="!canEditStatus">
+      <a
+        [routerLink]="['/user/user-stories/add']"
+        routerLinkActive="router-link-active"
+        >Add Story</a
+      >
+    </div>
+  </div>
+  <div class="col-md-10">
+    <router-outlet></router-outlet>
+  </div>
+</div>

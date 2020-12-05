@@ -1,3 +1,56 @@
-<p>
-  list-user-story works!
-</p>
+<div class="row">
+  <div class="col-md-2">Stories</div>
+  <div class="col-md-4">
+    <label> Filter By Type = </label>
+    <select
+      [(ngModel)]="filterByTypeString"
+      class="form-control"
+      (change)="filterStoriesByType()"
+    >
+      <option *ngFor="let storyType of storyTypes">
+        {{ storyType }}
+      </option>
+    </select>
+  </div>
+  <div class="col-md-4">
+    <label> Sort By</label>
+    <select
+      (change)="sortStories()"
+      [(ngModel)]="sortString"
+      class="form-control"
+    >
+      <option value="type">Type</option>
+      <option value="complexity">Complexity</option>
+      <option value="estimatedHrs">Estimated time for completion</option>
+      <option value="cost">Cost</option>
+    </select>
+  </div>
+</div>
+<div *ngIf="loading">loading...</div>
+<table class="table table-hover" *ngIf="!loading">
+  <thead>
+    <th>ID</th>
+    <th>Summary</th>
+    <th>Description</th>
+    <th>Type</th>
+    <th>Complexity</th>
+    <th>Estimated time for completion</th>
+    <th>Cost</th>
+    <th><span></span></th>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let story of filteredStories"
+      class="clickable {{ getStoryMappingByColor(story.status) }}"
+      (click)="navigateToStory(story.id)"
+    >
+      <td>{{ story.id }}</td>
+      <td>{{ story.summary }}</td>
+      <td>{{ story.description }}</td>
+      <td>{{ story.type }}</td>
+      <td>{{ story.complexity }}</td>
+      <td>{{ story.estimatedHrs }}</td>
+      <td>{{ story.cost }}</td>
+    </tr>
+  </tbody>
+</table>
