@@ -13,8 +13,6 @@ import { Roles } from '../../../models/roles'
   styleUrls: ['./add-user-story.component.scss']
 })
 export class AddUserStoryComponent implements OnInit {
-  isEdit: boolean;
-  loading: boolean;
   constructor(private formBuilder: FormBuilder,
     private userStoryService: UserStoryService,
     private router: Router,
@@ -23,8 +21,13 @@ export class AddUserStoryComponent implements OnInit {
   ) { }
   storyForm: FormGroup;
   public $unsubscribe = new Subject();
-  storyId: number;
   story: Story;
+  isEdit: boolean;
+  canEditStatus: boolean;
+  loading: boolean;
+  storyId: number;
+  public submitted: boolean;
+  public submitting: boolean;
   storyTypes = [
     { label: 'Select Story Type', value: '', },
     { label: 'Enhancement', value: 'enhancement' },
@@ -37,15 +40,14 @@ export class AddUserStoryComponent implements OnInit {
     { label: 'Mid', value: 'mid' },
     { label: 'High', value: 'high' }];
 
-  public submitted: boolean;
-  public submitting: boolean;
-  canEditStatus: boolean;
+
   ngOnInit() {
     this.storyId = this.route.snapshot.params.id;
     this.isEdit = !!this.storyId;
     this.canEditStatus = this.auth.currentUserValue.role === Roles.ADMIN;
     if (this.storyId) {
-      this.userStoryService.getStory(this.storyId)
+      this.userStoryService
+        .getStory(this.storyId)
         .pipe(takeUntil(this.$unsubscribe))
         .subscribe((result: any) => {
           this.story = result;
@@ -54,6 +56,7 @@ export class AddUserStoryComponent implements OnInit {
     }
     this.buildForm(this.story);
   }
+
   private buildForm(story: Story) {
     this.storyForm = this.formBuilder.group({
       summary: [{ value: story && story.summary || '', disabled: this.isEdit }, Validators.required],
@@ -66,10 +69,7 @@ export class AddUserStoryComponent implements OnInit {
   }
 
   get f() { return this.storyForm.controls; }
-  ngOnDestroy() {
-    this.$unsubscribe.next();
-    this.$unsubscribe.complete();
-  }
+
   onStoryModified() {
     this.submitted = true;
     if (this.storyForm.invalid) {
@@ -101,13 +101,19 @@ export class AddUserStoryComponent implements OnInit {
     this.loading = true;
     const story = this.extractStoryInFormInput();
     story.status = isStoryApproved ? 'accepted' : 'rejected';
-    this.userStoryService.modifyStory(story, this.isEdit)
+    this.userStoryService
+      .modifyStory(story, this.isEdit)
       .pipe(takeUntil(this.$unsubscribe))
-      .subscribe((c: any) => {
+      .subscribe(() => {
         this.router.navigate(['/user/user-stories']);
       }, () => {
         this.loading = false;
         alert("Error occured while changing story status")
       })
+  }
+
+  ngOnDestroy() {
+    this.$unsubscribe.next();
+    this.$unsubscribe.complete();
   }
 }
