@@ -10,8 +10,6 @@
 
 - Story status 'Pending' is used to represent null status instead of show blank fields.
 
-- When signing in, there's a toggle that switches between admin and user sign in, this serves the same purpose of having two buttons for admin and normal user login and the assumption is that its easier to comprehend and use.
-
 # User Story Frontend
 
 An application that has the option of creating a User Story (i.e ticket or card). The App contains information about what kind of task needs to be performed. The Admin will review the User Story and make changes if required. The Admin will also be able to approve or reject the User story created by the user.
