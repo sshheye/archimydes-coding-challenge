@@ -138,6 +138,18 @@
         </div>
       </div>
     </div>
+    <div class="row" *ngIf="story && canEditStatus">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <label for="cost">Status</label>
+          <input
+            type="text"
+            value="{{ story.status || 'pending' }}"
+            class="form-control"
+          />
+        </div>
+      </div>
+    </div>
     <a
       [routerLink]="['/user/user-stories']"
       routerLinkActive="router-link-active"
