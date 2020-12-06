@@ -26,11 +26,6 @@ describe('ListUserStoryComponent', () => {
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should return color based on story status', () => {
     const noFound = component.getStoryMappingByColor(null);
     const accepted = component.getStoryMappingByColor('accepted');
@@ -40,6 +35,10 @@ describe('ListUserStoryComponent', () => {
     expect(accepted).toBe("green");
     expect(rejected).toBe("red");
 
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
 });
