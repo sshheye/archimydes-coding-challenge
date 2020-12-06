@@ -10,7 +10,7 @@
 
 - Story status 'Pending' is used to represent null status instead of show blank fields.
 
-- When signing in, there's a toggle that switches between admin and user signing in, this serves the same purpose of having two buttons for admin and normal user login and the assumption is that its easier to comprehend and use.
+- When signing in, there's a toggle that switches between admin and user sign in, this serves the same purpose of having two buttons for admin and normal user login and the assumption is that its easier to comprehend and use.
 
 # User Story Frontend
 
