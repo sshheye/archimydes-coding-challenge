@@ -1,14 +1,18 @@
 # Assumptions
 
 - The app depends on API server https://github.com/Archimydes/coding-challenge-mock-api
-- Token expiration is set to 60 minutes based on the iat of the JWT.
-- Edit feature for stories is not feasible since 'put' endpoint(/v1/stories/{id}/{status}) requires a status and a normal user(story author) doesn't have permissions to set status.
+- Token expiration is set to 3600 seconds after the iat of the JWT. The expiration time can be adjusted in the
+  `src/environments/environment.ts` and `src/environments/environment.prod.ts` file.
+
+- Edit feature for stories is currently not feasible since the 'put' endpoint(/v1/stories/{id}/{status}) requires a status and a normal user(story author) doesn't have permissions to set status.
+
 - Story types are currently hard-coded in the frontend since there isn't an endpoint for that, a common solution is to provide a get endpoint for story types and then cache the story type on the frontend since they'll seldom change.
+
 - When signing in, there's a toggle that switches between admin and user signing in, this serves the same purpose of having two buttons for admin and normal user login and the assumption is that its easier to comprehend and use.
 
-# UserStoryFrontend
+# User Story Frontend
 
-A front-end app for an application that has the option of creating a User Story (i.e ticket or card). The App contains information about what kind of task needs to be performed. The Admin will review the User Story and make changes if required. The Admin will also be able to approve or reject the User story created by the user.
+An application that has the option of creating a User Story (i.e ticket or card). The App contains information about what kind of task needs to be performed. The Admin will review the User Story and make changes if required. The Admin will also be able to approve or reject the User story created by the user.
 
 ## Development server
 
