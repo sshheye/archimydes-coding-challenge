@@ -4,6 +4,9 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { ListUserStoryComponent } from './list-user-story.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('ListUserStoryComponent', () => {
   let component: ListUserStoryComponent;
@@ -11,9 +14,11 @@ describe('ListUserStoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListUserStoryComponent ]
+      imports: [HttpClientModule, RouterTestingModule],
+      declarations: [ListUserStoryComponent],
+      providers: [AuthenticationService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -25,4 +30,16 @@ describe('ListUserStoryComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should return color based on story status', () => {
+    const noFound = component.getStoryMappingByColor(null);
+    const accepted = component.getStoryMappingByColor('accepted');
+    const rejected = component.getStoryMappingByColor('rejected');
+
+    expect(noFound).toBe("black");
+    expect(accepted).toBe("green");
+    expect(rejected).toBe("red");
+
+  });
+
 });

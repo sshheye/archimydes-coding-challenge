@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
           this.router.navigate(['/user/user-stories/add']);
         }
         else {
-          this.router.navigate(['/account/login']);
+          this.router.navigate(['/']);
         }
       })
   }

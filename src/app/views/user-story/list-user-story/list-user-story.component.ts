@@ -30,7 +30,7 @@ export class ListUserStoryComponent implements OnInit {
   storyTypes = ['Enhancement', 'Bugfix', 'Development', 'QA', 'All'];
 
   ngOnInit() {
-    this.canEditStatus = this.auth.currentUserValue.role === Roles.ADMIN;
+    this.canEditStatus = this.auth.currentUserValue?.role === Roles.ADMIN;
     this.userStoryService.getStories()
       .pipe(takeUntil(this.$unsubscribe))
       .subscribe(results => {

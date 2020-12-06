@@ -44,7 +44,7 @@ export class AddUserStoryComponent implements OnInit {
   ngOnInit() {
     this.storyId = this.route.snapshot.params.id;
     this.isEdit = !!this.storyId;
-    this.canEditStatus = this.auth.currentUserValue.role === Roles.ADMIN;
+    this.canEditStatus = this.auth.currentUserValue?.role === Roles.ADMIN;
     if (this.storyId) {
       this.userStoryService
         .getStory(this.storyId)

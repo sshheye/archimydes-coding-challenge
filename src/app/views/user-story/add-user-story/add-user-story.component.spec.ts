@@ -4,6 +4,9 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { AddUserStoryComponent } from './add-user-story.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AddUserStoryComponent', () => {
   let component: AddUserStoryComponent;
@@ -11,9 +14,11 @@ describe('AddUserStoryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddUserStoryComponent ]
+      imports: [FormsModule, ReactiveFormsModule, HttpClientTestingModule, RouterTestingModule],
+      declarations: [AddUserStoryComponent],
+
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
