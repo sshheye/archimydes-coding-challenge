@@ -49,7 +49,7 @@
     *ngIf="!loading && filteredStories.length"
   >
     <thead>
-      <th>ID</th>
+      <th *ngIf="!canEditStatus">ID</th>
       <th class="table-item-summary">Summary</th>
       <th class="table-item-description">Description</th>
       <th>Type</th>
@@ -63,7 +63,7 @@
         class="clickable {{ getStoryMappingByColor(story.status) }}"
         (click)="navigateToStory(story.id)"
       >
-        <td>{{ story.id }}</td>
+        <td *ngIf="!canEditStatus">{{ story.id }}</td>
         <td>{{ story.summary }}</td>
         <td>{{ story.description }}</td>
         <td>{{ story.type }}</td>

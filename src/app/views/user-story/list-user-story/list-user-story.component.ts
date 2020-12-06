@@ -4,6 +4,8 @@ import { UserStoryService } from 'src/app/services/user-story.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { Roles } from 'src/app/models/roles';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-list-user-story',
@@ -11,20 +13,35 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-user-story.component.scss']
 })
 export class ListUserStoryComponent implements OnInit {
-  loading: boolean = true;
+  constructor(
+    private userStoryService: UserStoryService,
+    private router: Router,
+    public auth: AuthenticationService) { }
 
-  constructor(private userStoryService: UserStoryService, private router: Router) { }
   public $unsubscribe = new Subject();
+  loading: boolean = true;
+  canEditStatus: boolean;
   stories: Story[] = [];
   filteredStories: Story[] = [];
+
   storyColorMap = { rejected: 'red', accepted: 'green', notFound: 'black' };
   sortString: string = 'type';
   filterByTypeString: string = 'Enhancement';
   storyTypes = ['Enhancement', 'Bugfix', 'Development', 'QA', 'All'];
-  ngOnDestroy() {
-    this.$unsubscribe.next();
-    this.$unsubscribe.complete();
+
+  ngOnInit() {
+    this.canEditStatus = this.auth.currentUserValue.role === Roles.ADMIN;
+    this.userStoryService.getStories()
+      .pipe(takeUntil(this.$unsubscribe))
+      .subscribe(results => {
+        this.stories = results;
+        this.loading = false;
+        this.filteredStories = this.stories;
+      }, () => {
+        this.loading = false;
+      })
   }
+
   getStoryMappingByColor(status: string) {
     if (!(status in this.storyColorMap))
       return this.storyColorMap.notFound
@@ -47,6 +64,7 @@ export class ListUserStoryComponent implements OnInit {
         break;
     }
   }
+
   filterStoriesByType() {
     const storyType = this.filterByTypeString;
     if (storyType === 'All') {
@@ -72,6 +90,7 @@ export class ListUserStoryComponent implements OnInit {
     this.filteredStories.sort((a, b) => b.type.localeCompare(a.type));
 
   }
+
   sortStoriesByComplexity(reverseDirection: boolean) {
     if (reverseDirection) {
       this.filteredStories.sort((a, b) => a.complexity.localeCompare(b.complexity));
@@ -79,6 +98,7 @@ export class ListUserStoryComponent implements OnInit {
     }
     this.filteredStories.sort((a, b) => b.complexity.localeCompare(a.complexity));
   }
+
   sortStoriesByCompletionTime(reverseDirection: boolean) {
     if (reverseDirection) {
       this.filteredStories.sort((a, b) => a.estimatedHrs - b.estimatedHrs);
@@ -86,19 +106,13 @@ export class ListUserStoryComponent implements OnInit {
     }
     this.filteredStories.sort((a, b) => b.estimatedHrs - a.estimatedHrs);
   }
-  ngOnInit() {
-    this.userStoryService.getStories()
-      .pipe(takeUntil(this.$unsubscribe))
-      .subscribe(results => {
-        this.stories = results;
-        this.loading = false;
-        this.filteredStories = this.stories;
-      }, () => {
-        this.loading = false;
-      })
-  }
 
   navigateToStory(storyId: any) {
     this.router.navigate([`user/user-stories/${storyId}/edit`])
+  }
+
+  ngOnDestroy() {
+    this.$unsubscribe.next();
+    this.$unsubscribe.complete();
   }
 }
