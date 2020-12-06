@@ -1,14 +1,18 @@
+# Assumptions
+
+- The app depends on API server https://github.com/Archimydes/coding-challenge-mock-api
+- Token expiration is set to 60 minutes based on the iat of the JWT.
+- Edit feature for stories is not feasible since 'put' endpoint(/v1/stories/{id}/{status}) requires a status and a normal user(story author) doesn't have permissions to set status.
+- Story types are currently hard-coded in the frontend since there isn't an endpoint for that, a common solution is to provide a get endpoint for story types and then cache the story type on the frontend since they'll seldom change.
+- When signing in, there's a toggle that switches between admin and user signing in, this serves the same purpose of having two buttons for admin and normal user login and the assumption is that its easier to comprehend and use.
+
 # UserStoryFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.5.
+A front-end app for an application that has the option of creating a User Story (i.e ticket or card). The App contains information about what kind of task needs to be performed. The Admin will review the User Story and make changes if required. The Admin will also be able to approve or reject the User story created by the user.
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
@@ -21,7 +25,3 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 ## Running end-to-end tests
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
