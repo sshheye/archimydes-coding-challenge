@@ -6,9 +6,9 @@
 
 - Edit feature for stories is currently not feasible since the 'put' endpoint(/v1/stories/{id}/{status}) requires a status and a normal user(story author) doesn't have permissions to set status.
 
-- Story types are currently hard-coded in the frontend since there isn't an endpoint for that, a common solution is to provide a get endpoint for story types and then cache the story type on the frontend since they'll seldom change.
+- Story status 'Pending' is used to represent null status instead of showing blank fields.
 
-- Story status 'Pending' is used to represent null status instead of show blank fields.
+- Story types are currently hard-coded in the frontend since there isn't an endpoint for that, a common solution is to provide a get endpoint for story types and then cache the story type on the frontend since they'll seldom change.
 
 # User Story Frontend
 
