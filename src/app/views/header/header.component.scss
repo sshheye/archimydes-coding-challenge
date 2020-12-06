@@ -40,6 +40,14 @@
   background-color: #36709a;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
 }
+.default-nav-item:hover {
+  background-color: initial !important;
+  box-shadow: initial !important;
+  opacity: 1;
+}
+.default-nav-item {
+  opacity: 0.75;
+}
 .btn-primary {
   background-color: #268fdd;
   color: #ffffff;

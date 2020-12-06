@@ -22,9 +22,24 @@
 tr:hover {
   opacity: 0.8;
 }
+
+.table-item-summary {
+  width: 25%;
+}
 .table-item-description {
   width: 25%;
 }
+
+.table-item-etc {
+  width: 25%;
+}
+
 .clickable {
   cursor: pointer;
+}
+.sort-direction {
+  font-size: 25px;
+  position: absolute;
+  left: 97%;
+  top: 50%;
 }

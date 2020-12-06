@@ -22,6 +22,14 @@ export class AuthenticationService {
         return this.getUserFromLocalStorage()?.token;
     }
 
+    public getTokenUnExpired() {
+        const token = this.getUserFromLocalStorage()?.token;
+        if (this.isTokenExpired(token)) {
+            this.logout();
+            return;
+        }
+        return token;
+    }
     public get currentUserValue(): User {
         return this.currentUserSubject.value;
     }
@@ -44,7 +52,7 @@ export class AuthenticationService {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
-        this.router.navigate(['/account/login'])
+        this.router.navigate(['/account/login']);
     }
     public authHeaders() {
         // create authorization header with our jwt token

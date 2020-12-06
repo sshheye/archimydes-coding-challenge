@@ -9,10 +9,12 @@ import { Roles } from 'src/app/models/roles';
 })
 export class HeaderComponent implements OnInit {
   canEditStatus: boolean;
+  role: string;
   constructor(private authService: AuthenticationService,) { }
 
   ngOnInit() {
-    this.canEditStatus = this.authService.currentUserValue.role === Roles.ADMIN;
+    this.role = this.authService.currentUserValue?.role;
+    this.canEditStatus = this.role === Roles.ADMIN;
   }
   logout() {
     this.authService.logout();

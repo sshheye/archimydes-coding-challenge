@@ -17,6 +17,20 @@
     </div>
     <div class="col-md-4 col-sm-12">
       <label> Sort By</label>
+      <span class="sort-direction">
+        <span
+          (click)="sortStories(true)"
+          title="Sort Direction -Up"
+          class="clickable"
+          >&#8593;</span
+        >
+        <span
+          (click)="sortStories(false)"
+          title="Sort Direction -Down"
+          class="clickable"
+          >&#8595;</span
+        >
+      </span>
       <select
         (change)="sortStories()"
         [(ngModel)]="sortString"
@@ -36,13 +50,12 @@
   >
     <thead>
       <th>ID</th>
-      <th>Summary</th>
+      <th class="table-item-summary">Summary</th>
       <th class="table-item-description">Description</th>
       <th>Type</th>
       <th>Complexity</th>
-      <th>Estimated time for completion</th>
+      <th class="table-item-etc">Estimated time for completion</th>
       <th>Cost</th>
-      <th><span></span></th>
     </thead>
     <tbody>
       <tr
@@ -61,6 +74,6 @@
     </tbody>
   </table>
   <div *ngIf="!loading && !filteredStories.length">
-    <h5>No results found.</h5>
+    <h6>No result found.</h6>
   </div>
 </div>

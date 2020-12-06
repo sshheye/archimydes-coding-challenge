@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: HomeComponent,
+    redirectTo: 'home',
   },
   {
     path: 'user/user-stories',
@@ -27,11 +27,6 @@ const routes: Routes = [
   },
   {
     path: 'user/user-stories/:id/edit',
-    component: AddUserStoryComponent,
-    canActivate: [UserAuthGuard],
-  },
-  {
-    path: 'user/user-stories/:id/view',
     component: AddUserStoryComponent,
     canActivate: [UserAuthGuard],
   },

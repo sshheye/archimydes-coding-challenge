@@ -17,7 +17,7 @@ export class ListUserStoryComponent implements OnInit {
   public $unsubscribe = new Subject();
   stories: Story[] = [];
   filteredStories: Story[] = [];
-  storyByColorMapping = { rejected: 'red', accepted: 'green' };
+  storyColorMap = { rejected: 'red', accepted: 'green', notFound: 'black' };
   sortString: string = 'type';
   filterByTypeString: string = 'Enhancement';
   storyTypes = ['Enhancement', 'Bugfix', 'Development', 'QA', 'All'];
@@ -26,24 +26,23 @@ export class ListUserStoryComponent implements OnInit {
     this.$unsubscribe.complete();
   }
   getStoryMappingByColor(status: string) {
-    if (!(status in this.storyByColorMapping))
-      return 'black'
-    return this.storyByColorMapping[status];
+    if (!(status in this.storyColorMap))
+      return this.storyColorMap.notFound
+    return this.storyColorMap[status];
   }
 
-  sortStories() {
+  sortStories(reverseDirection: boolean = false) {
     const sortType = this.sortString;
-    console.log(sortType)
     switch (sortType) {
       case 'type':
-        this.sortStoriesByType();
+        this.sortStoriesByType(reverseDirection);
         break;
       case 'cost':
-        this.sortStoriesByCost();
+        this.sortStoriesByCost(reverseDirection);
       case 'complexity':
-        this.sortStoriesByComplexity();
+        this.sortStoriesByComplexity(reverseDirection);
       case 'estimatedHrs':
-        this.sortStoriesByCompletionTime();
+        this.sortStoriesByCompletionTime(reverseDirection);
       default:
         break;
     }
@@ -57,18 +56,35 @@ export class ListUserStoryComponent implements OnInit {
     this.filteredStories = this.stories.filter(story => story.type.toLocaleLowerCase() === storyType.toLocaleLowerCase());
   }
 
-  sortStoriesByCost() {
-    this.filteredStories.sort((a, b) => a.cost - b.cost);
+  sortStoriesByCost(reverseDirection: boolean) {
+    if (reverseDirection) {
+      this.filteredStories.sort((a, b) => a.cost - b.cost);
+      return;
+    }
+    this.filteredStories.sort((a, b) => b.cost - a.cost);
   }
 
-  sortStoriesByType() {
-    this.filteredStories.sort((a, b) => a.type.localeCompare(b.type));
+  sortStoriesByType(reverseDirection: boolean) {
+    if (reverseDirection) {
+      this.filteredStories.sort((a, b) => a.type.localeCompare(b.type));
+      return;
+    }
+    this.filteredStories.sort((a, b) => b.type.localeCompare(a.type));
+
   }
-  sortStoriesByComplexity() {
-    this.filteredStories.sort((a, b) => a.complexity.localeCompare(b.complexity));
+  sortStoriesByComplexity(reverseDirection: boolean) {
+    if (reverseDirection) {
+      this.filteredStories.sort((a, b) => a.complexity.localeCompare(b.complexity));
+      return;
+    }
+    this.filteredStories.sort((a, b) => b.complexity.localeCompare(a.complexity));
   }
-  sortStoriesByCompletionTime() {
-    this.filteredStories.sort((a, b) => a.estimatedHrs - b.estimatedHrs);
+  sortStoriesByCompletionTime(reverseDirection: boolean) {
+    if (reverseDirection) {
+      this.filteredStories.sort((a, b) => a.estimatedHrs - b.estimatedHrs);
+      return;
+    }
+    this.filteredStories.sort((a, b) => b.estimatedHrs - a.estimatedHrs);
   }
   ngOnInit() {
     this.userStoryService.getStories()
@@ -83,6 +99,6 @@ export class ListUserStoryComponent implements OnInit {
   }
 
   navigateToStory(storyId: any) {
-    this.router.navigate([`user/user-stories/${storyId}/view`])
+    this.router.navigate([`user/user-stories/${storyId}/edit`])
   }
 }

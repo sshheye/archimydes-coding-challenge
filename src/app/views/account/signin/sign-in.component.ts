@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first, takeUntil } from 'rxjs/operators';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { AlertService } from '../../../services/alert.service';
 import { Subject } from 'rxjs/internal/Subject';
 
 
@@ -23,23 +22,21 @@ export class SignInComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private alertService: AlertService
   ) {
 
   }
 
   ngOnInit() {
-    // redirect to home if already logged in
-    // if (this.authenticationService.currentUserValue && !this.authenticationService.isTokenExpired()) {
-    //   this.router.navigate(['/dashboard']);
-    // }
+    //  redirect to home if already logged in
+    if (this.authenticationService.currentUser && !this.authenticationService.isTokenExpired()) {
+      this.router.navigate(['/home']);
+    }
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.email, Validators.required])],
       password: ['', Validators.compose([Validators.required])],
       isAdmin: [false]
     });
-    // get return url from route parameters or default to '/'
-    this.returnUrl = this.route.snapshot.paramMap.get('returnUrl') || '/home';
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/home';
   }
 
   // convenience getter for easy access to form fields
@@ -64,12 +61,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       .subscribe(() => { this.router.navigate([this.returnUrl]); },
         err => {
           this.loading = false;
-          this.errorMessage = (err.status == 401)
-            ? "Invalid email or password" : this.alertService.error("Error Occured while processing your request.Please try again");;
-          setTimeout(() => {
-            this.errorMessage = null;
-          }, 10000);
-
+          alert("Error Occured while processing your request.Please try again");
         });
   }
 }

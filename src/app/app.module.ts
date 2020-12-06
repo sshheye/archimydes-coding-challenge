@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SignInComponent } from './views/account/signin/sign-in.component';
-import { ToggleButtonComponent } from './views/toggle-button/toggle-button.component';
+import { ToggleButtonComponent } from './shared/toggle-button/toggle-button.component';
 
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
