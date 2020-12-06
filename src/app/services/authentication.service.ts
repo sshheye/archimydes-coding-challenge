@@ -87,7 +87,7 @@ export class AuthenticationService {
         const decoded = jwt_decode<JwtPayload>(token);
         if (decoded.iat === undefined) return null;
         const date = new Date(0);
-        const expiresAt = 3600;
+        const expiresAt = environment.tokenExpiration;
         date.setUTCSeconds(decoded.iat + expiresAt);
         return date;
     }
