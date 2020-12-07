@@ -7,14 +7,15 @@ import { ListUserStoryComponent } from './list-user-story.component';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-describe('ListUserStoryComponent', () => {
+describe('List User Story Component', () => {
   let component: ListUserStoryComponent;
   let fixture: ComponentFixture<ListUserStoryComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, RouterTestingModule],
+      imports: [HttpClientModule, RouterTestingModule, FormsModule, ReactiveFormsModule,],
       declarations: [ListUserStoryComponent],
       providers: [AuthenticationService]
     })
@@ -24,8 +25,19 @@ describe('ListUserStoryComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ListUserStoryComponent);
     component = fixture.componentInstance;
+
+    component.stories = [
+      { summary: 'test', complexity: 'low', cost: 1, description: 'test', estimatedHrs: 2, type: 'bugfix' },
+      { summary: 'test2', complexity: 'high', cost: 2, description: 'test2', estimatedHrs: 4, type: 'QA' }];
+    component.filteredStories = component.stories;
+
     fixture.detectChanges();
   });
+
+  it('should create component', () => {
+    expect(component).toBeTruthy();
+  });
+
   it('should return color based on story status', () => {
     const noFound = component.getStoryMappingByColor(null);
     const accepted = component.getStoryMappingByColor('accepted');
@@ -37,8 +49,29 @@ describe('ListUserStoryComponent', () => {
 
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should sort stories by type', () => {
+    const isReversed: boolean = true;
+    component.sortStoriesByType(!isReversed);
+    expect(component.filteredStories[0].type).toBe('QA');
   });
+
+  it('should sort stories by cost', () => {
+    const isReversed: boolean = true;
+    component.sortStoriesByType(!isReversed);
+    expect(component.filteredStories[0].cost).toBe(2);
+  });
+
+  it('should sort stories by complexity', () => {
+    const isReversed: boolean = true;
+    component.sortStoriesByType(!isReversed);
+    expect(component.filteredStories[0].complexity).toBe('high');
+  });
+
+  it('should sort stories by estimatedHrs', () => {
+    const isReversed: boolean = true;
+    component.sortStoriesByType(!isReversed);
+    expect(component.filteredStories[0].estimatedHrs).toBe(4);
+  });
+
 
 });
