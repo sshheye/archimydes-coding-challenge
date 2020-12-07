@@ -28,7 +28,7 @@ export class ListUserStoryComponent implements OnInit {
   sortString: string = 'type';
   filterByTypeString: string = 'Enhancement';
   storyTypes = ['Enhancement', 'Bugfix', 'Development', 'QA', 'All'];
-  sortDirection: boolean;
+  isSortDirectionReversed: boolean;
   ngOnInit() {
     this.canEditStatus = this.auth.currentUserValue?.role === Roles.ADMIN;
     this.userStoryService.getStories()
@@ -49,19 +49,21 @@ export class ListUserStoryComponent implements OnInit {
   }
 
   sortStories() {
-    this.sortDirection = !this.sortDirection;
-    const reverseDirection = this.sortDirection;
+    this.isSortDirectionReversed = !this.isSortDirectionReversed;
     const sortType = this.sortString;
     switch (sortType) {
       case 'type':
-        this.sortStoriesByType(reverseDirection);
+        this.sortStoriesByType(this.isSortDirectionReversed);
         break;
       case 'cost':
-        this.sortStoriesByCost(reverseDirection);
+        this.sortStoriesByCost(this.isSortDirectionReversed);
+            break;
       case 'complexity':
-        this.sortStoriesByComplexity(reverseDirection);
+        this.sortStoriesByComplexity(this.isSortDirectionReversed);
+        break;
       case 'estimatedHrs':
-        this.sortStoriesByCompletionTime(reverseDirection);
+        this.sortStoriesByCompletionTime(this.isSortDirectionReversed);
+        break;
       default:
         break;
     }
