@@ -28,7 +28,7 @@ export class ListUserStoryComponent implements OnInit {
   sortString: string = 'type';
   filterByTypeString: string = 'Enhancement';
   storyTypes = ['Enhancement', 'Bugfix', 'Development', 'QA', 'All'];
-
+  sortDirection: boolean;
   ngOnInit() {
     this.canEditStatus = this.auth.currentUserValue?.role === Roles.ADMIN;
     this.userStoryService.getStories()
@@ -48,7 +48,9 @@ export class ListUserStoryComponent implements OnInit {
     return this.storyColorMap[status];
   }
 
-  sortStories(reverseDirection: boolean = false) {
+  sortStories() {
+    this.sortDirection = !this.sortDirection;
+    const reverseDirection = this.sortDirection;
     const sortType = this.sortString;
     switch (sortType) {
       case 'type':

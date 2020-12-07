@@ -17,20 +17,10 @@
     </div>
     <div class="col-md-4 col-sm-12">
       <label> Sort By</label>
-      <span class="sort-direction">
-        <span
-          (click)="sortStories(true)"
-          title="Sort Direction -Up"
-          class="clickable"
-          >&#8593;</span
-        >
-        <span
-          (click)="sortStories(false)"
-          title="Sort Direction -Down"
-          class="clickable"
-          >&#8595;</span
-        >
-      </span>
+      <button class="btn btn-light sort-direction" (click)="sortStories()">
+        <span title="Sort Direction -Up" class="clickable">&#8593;</span>
+        <span title="Sort Direction -Down" class="clickable">&#8595;</span>
+      </button>
       <select
         (change)="sortStories()"
         [(ngModel)]="sortString"
