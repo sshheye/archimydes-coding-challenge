@@ -24,7 +24,8 @@ export class AddUserStoryComponent implements OnInit {
   story: Story;
   isEdit: boolean;
   canEditStatus: boolean;
-  loading: boolean;
+  shouldDisableFormField: boolean;
+  loading: boolean = true;
   storyId: number;
   public submitted: boolean;
   public submitting: boolean;
@@ -45,6 +46,7 @@ export class AddUserStoryComponent implements OnInit {
     this.storyId = this.route.snapshot.params.id;
     this.isEdit = !!this.storyId;
     this.canEditStatus = this.auth.currentUserValue?.role === Roles.ADMIN;
+    this.shouldDisableFormField = this.isEdit && !this.canEditStatus;
     if (this.storyId) {
       this.userStoryService
         .getStory(this.storyId)
@@ -54,18 +56,21 @@ export class AddUserStoryComponent implements OnInit {
           this.buildForm(this.story);
         })
     }
-    this.buildForm(this.story);
+    else {
+      this.buildForm(this.story);
+    }
   }
 
   private buildForm(story: Story) {
     this.storyForm = this.formBuilder.group({
-      summary: [{ value: story && story.summary || '', disabled: this.isEdit }, Validators.required],
-      description: [{ value: story && story.description || '', disabled: this.isEdit }, Validators.required],
-      type: [{ value: story && story.type || '', disabled: this.isEdit }, Validators.required],
-      complexity: [{ value: story && story.complexity || '', disabled: this.isEdit }, Validators.required],
-      estimatedCompletionTime: [{ value: story && story.estimatedHrs || null, disabled: this.isEdit }],
-      cost: [{ value: story && story.cost || null, disabled: this.isEdit }]
+      summary: [{ value: story?.summary, disabled: this.shouldDisableFormField }, Validators.required],
+      description: [{ value: story?.description, disabled: this.shouldDisableFormField }, Validators.required],
+      type: [{ value: story?.type || '', disabled: this.shouldDisableFormField }, Validators.required],
+      complexity: [{ value: story?.complexity || '', disabled: this.shouldDisableFormField }, Validators.required],
+      estimatedCompletionTime: [{ value: story?.estimatedHrs, disabled: this.shouldDisableFormField }],
+      cost: [{ value: story?.cost, disabled: this.shouldDisableFormField }]
     });
+    this.loading = false;
   }
 
   get f() { return this.storyForm.controls; }
@@ -98,7 +103,7 @@ export class AddUserStoryComponent implements OnInit {
   }
 
   setStatus(isStoryApproved: boolean) {
-    this.loading = true;
+    this.submitting = true;
     const story = this.extractStoryInFormInput();
     story.status = isStoryApproved ? 'accepted' : 'rejected';
     this.userStoryService
@@ -107,7 +112,7 @@ export class AddUserStoryComponent implements OnInit {
       .subscribe(() => {
         this.router.navigate(['/user/user-stories']);
       }, () => {
-        this.loading = false;
+        this.submitting = false;
         alert("Error occured while changing story status")
       })
   }
