@@ -44,10 +44,15 @@ tr:hover {
   background-color: #fff;
   font-size: 18px;
   position: absolute;
-  left: 97%;
-  top: 35%;
-  padding: 8px 5px;
+  left: 98%;
+  top: 36%;
+  padding: 4.7px 4px;
+  border: 1px solid #ced4da;
 }
 .sort-direction:active {
   margin: 2px;
+}
+
+.story-filter-section {
+  margin-bottom: 4px;
 }

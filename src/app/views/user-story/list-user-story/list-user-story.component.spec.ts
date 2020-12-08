@@ -30,6 +30,7 @@ describe('List User Story Component', () => {
       { id:1, summary: 'test', complexity: 'low', cost: 1, description: 'test', estimatedHrs: 2, type: 'bugfix' },
       { id:2, summary: 'test2', complexity: 'high', cost: 2, description: 'test2', estimatedHrs: 4, type: 'QA' }];
     component.filteredStories = component.stories;
+    component.loading = false;
 
     fixture.detectChanges();
   });
@@ -76,7 +77,7 @@ describe('List User Story Component', () => {
   it('should sort stories by ID', () => {
     const isReversed: boolean = true;
     component.sortStoriesByID(!isReversed);
-    expect(component.filteredStories[0].estimatedHrs).toBe(2);
+    expect(component.filteredStories[0].id).toBe(2);
   });
 
 });
