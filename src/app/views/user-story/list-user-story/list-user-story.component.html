@@ -26,6 +26,7 @@
         [(ngModel)]="sortString"
         class="form-control clickable"
       >
+        <option value="id" *ngIf="!canEditStatus">Story ID</option>
         <option value="type">Type</option>
         <option value="complexity">Complexity</option>
         <option value="estimatedHrs">Estimated time for completion</option>

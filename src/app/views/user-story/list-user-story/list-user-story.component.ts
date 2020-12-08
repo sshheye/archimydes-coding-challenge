@@ -25,12 +25,13 @@ export class ListUserStoryComponent implements OnInit {
   filteredStories: Story[] = [];
 
   storyColorMap = { rejected: 'red', accepted: 'green', notFound: 'black' };
-  sortString: string = 'type';
+  sortString: string;
   filterByTypeString: string = 'Enhancement';
   storyTypes = ['Enhancement', 'Bugfix', 'Development', 'QA', 'All'];
   isSortDirectionReversed: boolean;
   ngOnInit() {
     this.canEditStatus = this.auth.currentUserValue?.role === Roles.ADMIN;
+    this.sortString = this.canEditStatus ? 'type' : 'id';
     this.userStoryService.getStories()
       .pipe(takeUntil(this.$unsubscribe))
       .subscribe(results => {
@@ -52,12 +53,14 @@ export class ListUserStoryComponent implements OnInit {
     this.isSortDirectionReversed = !this.isSortDirectionReversed;
     const sortType = this.sortString;
     switch (sortType) {
+      case 'id':
+        this.sortStoriesByID(this.isSortDirectionReversed);
       case 'type':
         this.sortStoriesByType(this.isSortDirectionReversed);
         break;
       case 'cost':
         this.sortStoriesByCost(this.isSortDirectionReversed);
-            break;
+        break;
       case 'complexity':
         this.sortStoriesByComplexity(this.isSortDirectionReversed);
         break;
@@ -111,6 +114,13 @@ export class ListUserStoryComponent implements OnInit {
     this.filteredStories.sort((a, b) => b.estimatedHrs - a.estimatedHrs);
   }
 
+  sortStoriesByID(reverseDirection: boolean) {
+    if (reverseDirection) {
+      this.filteredStories.sort((a, b) => a.id - b.id);
+      return;
+    }
+    this.filteredStories.sort((a, b) => b.id - a.id);
+  }
   navigateToStory(storyId: any) {
     this.router.navigate([`user/user-stories/${storyId}/edit`])
   }
