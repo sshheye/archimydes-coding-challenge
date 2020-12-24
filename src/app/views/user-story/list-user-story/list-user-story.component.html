@@ -3,7 +3,7 @@
     <div class="col-md-2 col-sm-12">
       <strong><h4>Stories</h4></strong>
     </div>
-    <div class="col-md-4 col-sm-12">
+    <div class="col-md-4 col-sm-12 story-filter-section">
       <label> Filter By Story type</label>
       <select
         [(ngModel)]="filterByTypeString"
@@ -17,25 +17,16 @@
     </div>
     <div class="col-md-4 col-sm-12">
       <label> Sort By</label>
-      <span class="sort-direction">
-        <span
-          (click)="sortStories(true)"
-          title="Sort Direction -Up"
-          class="clickable"
-          >&#8593;</span
-        >
-        <span
-          (click)="sortStories(false)"
-          title="Sort Direction -Down"
-          class="clickable"
-          >&#8595;</span
-        >
-      </span>
+      <button class="btn btn-light sort-direction" (click)="sortStories()">
+        <span title="Sort Direction -Up" class="clickable">&#8593;</span>
+        <span title="Sort Direction -Down" class="clickable">&#8595;</span>
+      </button>
       <select
         (change)="sortStories()"
         [(ngModel)]="sortString"
         class="form-control clickable"
       >
+        <option value="id" *ngIf="!canEditStatus">Story ID</option>
         <option value="type">Type</option>
         <option value="complexity">Complexity</option>
         <option value="estimatedHrs">Estimated time for completion</option>

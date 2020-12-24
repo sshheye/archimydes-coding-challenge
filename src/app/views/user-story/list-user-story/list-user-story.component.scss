@@ -18,11 +18,14 @@
 .table td {
   border-top: none;
   border-bottom: 1px solid #c8ced3;
+  font-size: 0.875rem;
 }
 tr:hover {
   opacity: 0.8;
 }
-
+.table thead {
+  color: #104973;
+}
 .table-item-summary {
   width: 25%;
 }
@@ -38,8 +41,18 @@ tr:hover {
   cursor: pointer;
 }
 .sort-direction {
-  font-size: 25px;
+  background-color: #fff;
+  font-size: 18px;
   position: absolute;
-  left: 97%;
-  top: 50%;
+  left: 98%;
+  top: 36%;
+  padding: 4.7px 4px;
+  border: 1px solid #ced4da;
+}
+.sort-direction:active {
+  margin: 2px;
+}
+
+.story-filter-section {
+  margin-bottom: 4px;
 }

@@ -4,6 +4,10 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { LayoutComponent } from './layout.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HeaderComponent } from '../header/header.component';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('LayoutComponent', () => {
   let component: LayoutComponent;
@@ -11,9 +15,11 @@ describe('LayoutComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LayoutComponent ]
+      imports: [RouterTestingModule, HttpClientModule],
+      declarations: [LayoutComponent, HeaderComponent],
+      providers: [AuthenticationService]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -32,3 +32,12 @@ body {
 .btn-round {
   border-radius: 18px;
 }
+.form-control.is-invalid {
+  background-image: none;
+}
+.form-control {
+  color: #104973;
+}
+select {
+  cursor: pointer;
+}
