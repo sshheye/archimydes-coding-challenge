@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   tokenExpiration: 3600,
-  apiRoot: 'http://localhost:3000',
+  apiRoot: 'https://user-stories-api.herokuapp.com',
 };
