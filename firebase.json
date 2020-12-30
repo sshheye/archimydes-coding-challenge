@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/user-stories",
+    "public": "dist/user-story-frontend",
     "ignore": [
       "firebase.json",
       "**/.*",
